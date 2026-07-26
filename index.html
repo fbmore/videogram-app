@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Videogram</title>
+<style>
+  :root { --ink:#f4f4f6; --muted:#9b9ba4; --canvas:#0b0b0d; --surface:#161619; --accent:#ff7a45; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--canvas); color:var(--ink);
+    font-family:-apple-system,"SF Pro Rounded",system-ui,"Segoe UI",Roboto,sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:760px; margin:0 auto; padding:96px 24px; text-align:center; }
+  .logo { width:96px; height:96px; border-radius:24px; margin:0 auto 28px;
+    background:linear-gradient(150deg,#ff7a45,#ff4d6d); display:flex; align-items:center; justify-content:center;
+    font-size:44px; box-shadow:0 20px 60px rgba(255,77,109,.25); }
+  h1 { font-size:52px; font-weight:800; letter-spacing:-0.03em; margin:0 0 10px; }
+  .tag { font-size:21px; color:var(--muted); margin:0 auto 40px; max-width:520px; }
+  .features { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; text-align:left; margin:0 auto 48px; max-width:640px; }
+  .card { background:var(--surface); border:1px solid rgba(255,255,255,.06); border-radius:18px; padding:20px; }
+  .card h3 { margin:0 0 4px; font-size:16px; font-weight:600; }
+  .card p { margin:0; font-size:14px; color:var(--muted); }
+  .links a { color:var(--muted); text-decoration:none; font-size:15px; margin:0 12px; }
+  .links a:hover { color:var(--ink); }
+  footer { margin-top:56px; font-size:13px; color:var(--muted); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="logo">&#127909;</div>
+  <h1>Videogram</h1>
+  <p class="tag">Turn any video into beautiful frame grids, clips, GIFs and more — all on your device.</p>
+
+  <div class="features">
+    <div class="card"><h3>Frame grids</h3><p>Extract evenly‑spaced frames into a shareable grid, with smart face‑aware cropping.</p></div>
+    <div class="card"><h3>Trim &amp; export</h3><p>Set start and end frames and export the exact clip you want.</p></div>
+    <div class="card"><h3>Every format</h3><p>Video, sped‑up, muted, GIF, PNG sequence, audio, and text transcript.</p></div>
+    <div class="card"><h3>Private by design</h3><p>No accounts, no servers, no tracking. Everything stays on your phone.</p></div>
+  </div>
+
+  <div class="links">
+    <a href="privacy.html">Privacy Policy</a>·
+    <a href="terms.html">Terms of Use</a>·
+    <a href="support.html">Support</a>
+  </div>
+
+  <footer>© 2026 Francesco Bertocci</footer>
+</div>
+</body>
+</html>

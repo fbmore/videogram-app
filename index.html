@@ -3,306 +3,331 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Videogram — Frame-perfect video, on your device</title>
+<title>Videogram — Edit by transcript, trim frame-by-frame</title>
 <meta name="description" content="Turn any video into frame grids, clips, GIFs and captions — edited by transcript, trimmed frame-by-frame, all on your device.">
 <style>
   :root{
-    --ink:#f4f4f6; --muted:#9b9ba4; --canvas:#08080a; --panel:#111114;
-    --surface:rgba(255,255,255,.06); --line:rgba(255,255,255,.09);
-    --accent:#ff7a45; --accent2:#ff4d6d; --yellow:#ffd84d;
+    --ink:#ffffff; --muted:rgba(255,255,255,.5); --muted2:rgba(255,255,255,.7);
+    --canvas:#000000; --surface:rgba(255,255,255,.06); --surface2:rgba(255,255,255,.09);
+    --line:rgba(255,255,255,.1);
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{margin:0;background:var(--canvas);color:var(--ink);
-    font-family:-apple-system,"SF Pro Rounded",system-ui,"Segoe UI",Roboto,sans-serif;
-    line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-  a{color:var(--accent);text-decoration:none}
+    font-family:ui-rounded,"SF Pro Rounded",-apple-system,system-ui,"Segoe UI",Roboto,sans-serif;
+    line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:var(--ink);text-decoration:none}
   .wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+  svg{display:block}
 
-  /* ---------- hero ---------- */
-  header.hero{position:relative;text-align:center;padding:64px 24px 56px;overflow:hidden;
-    background:radial-gradient(60% 46% at 50% -6%,rgba(255,77,109,.20),transparent 72%)}
-  .logo{width:104px;height:104px;margin:0 auto 26px;animation:floaty 5s ease-in-out infinite}
-  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-  h1{font-size:clamp(40px,7vw,68px);font-weight:800;letter-spacing:-.03em;margin:0 0 12px;line-height:1.02}
-  .tag{font-size:clamp(17px,2.4vw,21px);color:var(--muted);max-width:560px;margin:0 auto 30px}
-  .cta{display:inline-flex;gap:8px;align-items:center;background:var(--accent);color:#1a0e07;
-    font-weight:700;padding:13px 22px;border-radius:14px;font-size:16px}
-  .cta.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+  /* hero */
+  header.hero{text-align:center;padding:96px 24px 72px;
+    background:radial-gradient(52% 40% at 50% 8%,rgba(255,255,255,.05),transparent 70%)}
+  .logo{width:100px;height:100px;margin:0 auto 28px;animation:floaty 5s ease-in-out infinite}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+  h1{font-size:clamp(38px,7vw,64px);font-weight:300;letter-spacing:-.02em;margin:0 0 14px}
+  .tag{font-size:clamp(16px,2.3vw,20px);color:var(--muted2);font-weight:300;max-width:540px;margin:0 auto 30px;white-space:pre-line}
   .ctarow{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-  .dots{display:flex;gap:7px;justify-content:center;margin-top:34px}
-  .dots i{width:7px;height:7px;border-radius:99px;background:rgba(255,255,255,.2)}
+  .cta{display:inline-flex;gap:8px;align-items:center;background:#fff;color:#000;
+    font-weight:600;padding:13px 24px;border-radius:16px;font-size:16px}
+  .cta.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
+  .dots{display:flex;gap:7px;justify-content:center;margin-top:38px}
+  .dots i{width:7px;height:7px;border-radius:99px;background:rgba(255,255,255,.22)}
   .dots i.on{width:22px;background:#fff}
 
-  /* ---------- feature rows ---------- */
-  section.feat{padding:56px 0;border-top:1px solid var(--line)}
-  .feat .wrap{display:grid;grid-template-columns:1fr 320px;gap:48px;align-items:center}
-  .feat.flip .wrap{grid-template-columns:320px 1fr}
+  /* feature rows */
+  section.feat{padding:60px 0;border-top:1px solid var(--line)}
+  .feat .wrap{display:grid;grid-template-columns:1fr 300px;gap:56px;align-items:center}
+  .feat.flip .wrap{grid-template-columns:300px 1fr}
   .feat.flip .copy{order:2}
-  .kicker{font-size:12px;letter-spacing:2.5px;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:10px}
-  .feat h2{font-size:clamp(26px,3.6vw,36px);font-weight:700;letter-spacing:-.02em;margin:0 0 12px;line-height:1.1}
-  .feat p{color:var(--muted);font-size:17px;margin:0 0 16px}
-  .bul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:8px}
-  .bul li{display:flex;gap:10px;align-items:center;color:#d9d9de;font-size:15px}
-  .bul li::before{content:"";width:6px;height:6px;border-radius:99px;background:var(--accent);flex:0 0 auto}
+  .feat h2{font-size:clamp(26px,3.6vw,34px);font-weight:600;letter-spacing:-.01em;margin:0 0 14px;line-height:1.12}
+  .feat p{color:var(--muted2);font-size:17px;font-weight:300;margin:0 0 18px}
+  .bul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+  .bul li{display:flex;gap:11px;align-items:center;color:var(--muted2);font-size:15px}
+  .bul li svg{width:17px;height:17px;flex:0 0 auto;opacity:.85}
   @media(max-width:760px){
-    .feat .wrap,.feat.flip .wrap{grid-template-columns:1fr;gap:28px}
-    .feat.flip .copy{order:0}
-    .phone{margin:0 auto}
+    .feat .wrap,.feat.flip .wrap{grid-template-columns:1fr;gap:30px;justify-items:center}
+    .feat.flip .copy{order:0}.feat .copy{text-align:center}
+    .feat .bul{align-items:center}
   }
 
-  /* ---------- phone mock ---------- */
-  .phone{width:300px;height:620px;border-radius:44px;background:#0c0c0e;
-    border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.6),inset 0 0 0 6px #000;
-    padding:16px;position:relative;overflow:hidden}
-  .phone .notch{position:absolute;top:14px;left:50%;transform:translateX(-50%);width:110px;height:26px;background:#000;border-radius:99px;z-index:5}
-  .screen{width:100%;height:100%;border-radius:30px;background:#000;overflow:hidden;position:relative;display:flex;flex-direction:column}
-  .screen .st{display:flex;justify-content:space-between;padding:16px 20px 6px;font-size:12px;color:#fff;font-weight:600}
-  .screen .body{flex:1;display:flex;flex-direction:column;padding:8px 18px 18px}
-  .scTitle{font-size:20px;font-weight:700;margin:6px 0 14px;letter-spacing:-.01em}
+  /* phone */
+  .phone{width:288px;height:600px;border-radius:44px;background:#050505;
+    border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.7),inset 0 0 0 5px #000;
+    padding:14px;position:relative}
+  .phone .notch{position:absolute;top:14px;left:50%;transform:translateX(-50%);width:104px;height:24px;background:#000;border-radius:99px;z-index:5}
+  .screen{width:100%;height:100%;border-radius:32px;background:#000;overflow:hidden;position:relative;display:flex;flex-direction:column}
+  .screen .st{display:flex;justify-content:space-between;align-items:center;padding:15px 22px 4px;font-size:12px;color:#fff;font-weight:600}
+  .screen .st svg{width:34px;height:12px;opacity:.9}
+  .screen .body{flex:1;display:flex;flex-direction:column;align-items:center;padding:26px 22px 22px;text-align:center}
+  .obTitle{font-size:21px;font-weight:600;letter-spacing:-.01em;margin:0 0 10px}
+  .obSub{font-size:12.5px;color:var(--muted);font-weight:300;line-height:1.5}
+  .obSub span{display:block}
 
-  /* waveform / pause removal */
-  .wave{display:flex;align-items:center;gap:4px;height:120px;margin-top:8px}
-  .wave b{flex:1;background:#3a3a40;border-radius:99px;animation:eq 1.4s ease-in-out infinite}
-  .wave b.p{background:rgba(255,122,69,.35);animation:drop 4.5s ease-in-out infinite}
-  @keyframes eq{0%,100%{transform:scaleY(.5)}50%{transform:scaleY(1)}}
-  @keyframes drop{0%,58%{transform:scaleY(1);opacity:1;width:auto}
-    70%,100%{transform:scaleY(.06);opacity:.25}}
-  .badge{margin-top:20px;display:inline-flex;gap:8px;align-items:center;align-self:flex-start;
-    background:rgba(80,220,130,.14);color:#5fe08a;border:1px solid rgba(95,224,138,.3);
-    padding:8px 14px;border-radius:12px;font-size:14px;font-weight:600;opacity:0;animation:pop 4.5s ease-in-out infinite}
-  @keyframes pop{0%,62%{opacity:0;transform:translateY(8px) scale(.9)}74%,100%{opacity:1;transform:none}}
+  /* waveform */
+  .wave{display:flex;align-items:center;justify-content:center;gap:4px;height:96px;margin-top:34px;width:210px}
+  .wave b{flex:1;background:rgba(255,255,255,.62);border-radius:99px;animation:eq 1.5s ease-in-out infinite}
+  .wave b.p{background:rgba(255,255,255,.28);animation:drop 4.6s ease-in-out infinite}
+  @keyframes eq{0%,100%{transform:scaleY(.45)}50%{transform:scaleY(1)}}
+  @keyframes drop{0%,56%{transform:scaleY(1);opacity:1}70%,100%{transform:scaleY(.05);opacity:.2}}
+  .removed{margin-top:26px;display:inline-flex;gap:7px;align-items:center;color:#fff;font-size:13px;font-weight:500;
+    opacity:0;animation:pop 4.6s ease-in-out infinite}
+  .removed svg{width:16px;height:16px}
+  @keyframes pop{0%,60%{opacity:0;transform:translateY(6px)}74%,100%{opacity:1;transform:none}}
 
-  /* captions */
-  .capstage{flex:1;min-height:220px;display:flex;align-items:center;justify-content:center}
-  .cap{font-size:30px;font-weight:800;color:var(--yellow);background:rgba(255,255,255,.08);
-    padding:8px 16px;border-radius:12px}
-  .cap span{display:none}
-  .cap span.on{display:inline}
+  /* caption */
+  .capstage{flex:1;min-height:150px;display:flex;align-items:center;justify-content:center}
+  .cap{font-size:28px;font-weight:800;color:#fff;background:rgba(255,255,255,.12);padding:7px 15px;border-radius:10px;letter-spacing:-.01em}
 
   /* transcript chips */
-  .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px}
-  .chip{background:rgba(255,255,255,.08);border:1px solid var(--line);border-radius:9px;
-    padding:6px 10px;font-size:14px;color:#e6e6ea}
-  .chip.cut{position:relative;color:#6b6b73}
-  .chip.cut::after{content:"";position:absolute;left:8px;right:8px;top:50%;height:2px;background:var(--accent2);
+  .chips{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:30px}
+  .chip{background:rgba(255,255,255,.08);border:1px solid var(--line);border-radius:9px;padding:6px 11px;font-size:14px;color:#eee}
+  .chip.cut{position:relative;color:rgba(255,255,255,.34)}
+  .chip.cut::after{content:"";position:absolute;left:9px;right:9px;top:50%;height:1.5px;background:#fff;
     transform:scaleX(0);transform-origin:left;animation:strike 4s ease-in-out infinite}
-  @keyframes strike{0%,30%{transform:scaleX(0)}45%,100%{transform:scaleX(1)}}
+  @keyframes strike{0%,28%{transform:scaleX(0)}44%,100%{transform:scaleX(1)}}
 
   /* export rows */
-  .exp{display:flex;flex-direction:column;gap:11px;margin-top:8px}
-  .exp .row{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);
-    border-radius:14px;padding:12px 14px;font-size:15px;opacity:0;transform:translateX(-18px);
-    animation:slidein 5.5s ease-in-out infinite}
-  .exp .row .ic{width:30px;height:30px;border-radius:9px;background:rgba(255,122,69,.16);
-    display:flex;align-items:center;justify-content:center;font-size:15px}
-  .exp .row:nth-child(1){animation-delay:.0s}
-  .exp .row:nth-child(2){animation-delay:.15s}
-  .exp .row:nth-child(3){animation-delay:.30s}
-  .exp .row:nth-child(4){animation-delay:.45s}
-  .exp .row:nth-child(5){animation-delay:.60s}
-  @keyframes slidein{0%{opacity:0;transform:translateX(-18px)}
-    10%,88%{opacity:1;transform:none}100%{opacity:1;transform:none}}
+  .exp{display:flex;flex-direction:column;gap:11px;margin-top:26px;width:100%}
+  .exp .row{display:flex;align-items:center;gap:13px;text-align:left;font-size:15px;color:#fff;
+    opacity:0;transform:translateX(-16px);animation:slidein 5.6s ease-in-out infinite}
+  .exp .row svg{width:22px;height:22px;flex:0 0 auto;opacity:.92}
+  .exp .row:nth-child(1){animation-delay:0s}.exp .row:nth-child(2){animation-delay:.14s}
+  .exp .row:nth-child(3){animation-delay:.28s}.exp .row:nth-child(4){animation-delay:.42s}
+  .exp .row:nth-child(5){animation-delay:.56s}
+  @keyframes slidein{0%{opacity:0;transform:translateX(-16px)}10%,90%{opacity:1;transform:none}100%{opacity:1}}
 
-  /* frame grid */
-  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:8px;flex:1}
-  .grid3 span{border-radius:8px;background:linear-gradient(135deg,#232329,#15151a);position:relative;overflow:hidden;
-    animation:reveal 5s ease-in-out infinite;opacity:0}
-  .grid3 span::after{content:"";position:absolute;inset:0;
-    background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.10) 50%,transparent 70%);
-    transform:translateX(-120%);animation:shine 3.2s linear infinite}
-  @keyframes shine{to{transform:translateX(120%)}}
-  @keyframes reveal{0%{opacity:0;transform:scale(.85)}12%,92%{opacity:1;transform:none}100%{opacity:1}}
-  .grid3 span:nth-child(1){animation-delay:0s}.grid3 span:nth-child(2){animation-delay:.08s}
-  .grid3 span:nth-child(3){animation-delay:.16s}.grid3 span:nth-child(4){animation-delay:.24s}
-  .grid3 span:nth-child(5){animation-delay:.32s}.grid3 span:nth-child(6){animation-delay:.40s}
-  .grid3 span:nth-child(7){animation-delay:.48s}.grid3 span:nth-child(8){animation-delay:.56s}
-  .grid3 span:nth-child(9){animation-delay:.64s}
+  /* import rows */
+  .imp{display:flex;flex-direction:column;gap:12px;margin-top:26px;width:100%}
+  .imp .row{display:flex;align-items:center;gap:13px;text-align:left;font-size:15px;color:#fff;
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;
+    opacity:0;transform:translateY(10px);animation:up 5.6s ease-in-out infinite}
+  .imp .row svg{width:22px;height:22px;opacity:.92}
+  .imp .row:nth-child(1){animation-delay:0s}.imp .row:nth-child(2){animation-delay:.16s}.imp .row:nth-child(3){animation-delay:.32s}
+  @keyframes up{0%{opacity:0;transform:translateY(10px)}12%,90%{opacity:1;transform:none}100%{opacity:1}}
 
-  /* real screenshot band */
-  .shotband{padding:64px 0;border-top:1px solid var(--line);text-align:center}
-  .shotframe{width:270px;margin:32px auto 0;border-radius:40px;border:1px solid var(--line);
-    background:#000;padding:10px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
-  .shotframe img{width:100%;display:block;border-radius:30px}
+  /* real screenshot gallery */
+  .gallery{padding:70px 0;border-top:1px solid var(--line);text-align:center}
+  .gallery h2{font-size:clamp(26px,3.6vw,34px);font-weight:600;margin:0 0 6px}
+  .gallery p{color:var(--muted2);font-weight:300;max-width:520px;margin:0 auto 8px}
+  .shots{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin-top:36px}
+  .shotframe{width:220px;border-radius:34px;border:1px solid var(--line);background:#000;padding:8px;box-shadow:0 24px 60px rgba(0,0,0,.6)}
+  .shotframe img{width:100%;display:block;border-radius:26px;filter:grayscale(1)}
 
-  /* pricing strip */
-  .price{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:28px}
-  .price .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:18px 24px;min-width:150px}
-  .price .card .amt{font-size:24px;font-weight:800}
-  .price .card .per{color:var(--muted);font-size:13px}
-  .price .card.best{border-color:var(--accent)}
+  /* pricing */
+  .price{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+  .price .card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px 26px;min-width:150px}
+  .price .card.best{border-color:rgba(255,255,255,.4)}
+  .price .card .amt{font-size:24px;font-weight:700}
+  .price .card .per{color:var(--muted);font-size:13px;font-weight:300;margin-top:2px}
 
-  footer{padding:48px 24px 64px;text-align:center;color:var(--muted);border-top:1px solid var(--line);font-size:14px}
-  footer a{color:var(--muted);margin:0 10px}
+  footer{padding:52px 24px 68px;text-align:center;color:var(--muted);border-top:1px solid var(--line);font-size:14px;font-weight:300}
+  footer a{color:var(--muted2);margin:0 10px}
 
   @media (prefers-reduced-motion: reduce){*{animation:none!important}
-    .badge,.exp .row,.grid3 span{opacity:1!important;transform:none!important}}
+    .removed,.exp .row,.imp .row{opacity:1!important;transform:none!important}}
 </style>
 </head>
 <body>
 
+<!-- inline vector icons (SF-Symbol style, monochrome) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <g id="i-cell"><rect x="3" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.6"/><rect x="14" y="14" width="7" height="7" rx="1.6"/></g>
+  <g id="i-film"><rect x="3" y="4" width="18" height="16" rx="2.4"/><path d="M8 4v16M16 4v16M3 9h5M3 15h5M16 9h5M16 15h5"/></g>
+  <g id="i-fwd"><path d="M4 6l7 6-7 6zM13 6l7 6-7 6z"/></g>
+  <g id="i-gif"><rect x="3" y="5" width="18" height="14" rx="2.4"/><path d="M10 9l5 3-5 3z"/></g>
+  <g id="i-wave"><path d="M4 12h1.5M8 7v10M12 4v16M16 8v8M20 11h0.5" stroke-linecap="round"/></g>
+  <g id="i-check"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5" stroke-linecap="round" stroke-linejoin="round"/></g>
+  <g id="i-photo"><rect x="3" y="5" width="18" height="14" rx="2.4"/><circle cx="8.5" cy="10" r="1.6"/><path d="M5 18l4.5-4.5L13 17l3-3 3 3"/></g>
+  <g id="i-txt"><path d="M4 6h16M4 12h16M4 18h10" stroke-linecap="round"/></g>
+  <g id="i-scissor"><circle cx="6" cy="7" r="2.4"/><circle cx="6" cy="17" r="2.4"/><path d="M8 8.5L20 17M8 15.5L20 7" stroke-linecap="round"/></g>
+</defs></svg>
+
 <!-- HERO -->
 <header class="hero">
-  <svg class="logo" viewBox="0 0 120 120" fill="none" aria-label="Videogram logo">
-    <polygon points="60,20 100,40 60,60 20,40" fill="#3a3a40"/>
-    <polygon points="60,44 100,64 60,84 20,64" fill="#fff"/>
-    <polygon points="60,68 100,88 60,108 20,88" fill="#3a3a40"/>
+  <svg class="logo" viewBox="0 0 120 120" aria-label="Videogram">
+    <polygon points="60,20 100,40 60,60 20,40" fill="rgba(255,255,255,.32)"/>
+    <polygon points="60,44 100,64 60,84 20,64" fill="#ffffff"/>
+    <polygon points="60,68 100,88 60,108 20,88" fill="rgba(255,255,255,.32)"/>
   </svg>
   <h1>Videogram</h1>
-  <p class="tag">Frame-perfect video, right on your phone. Edit by transcript, trim frame-by-frame, add captions, and export anything — no accounts, no cloud.</p>
+  <p class="tag">Edit by transcript, trim frame-by-frame
+& add captions — fast.</p>
   <div class="ctarow">
-    <a class="cta" href="#features">See what it does →</a>
+    <a class="cta" href="#tour">See the tour</a>
     <a class="cta ghost" href="support.html">Support</a>
   </div>
   <div class="dots"><i class="on"></i><i></i><i></i><i></i><i></i><i></i></div>
 </header>
 
-<div id="features"></div>
+<div id="tour"></div>
 
-<!-- 1 · PAUSE REMOVAL -->
+<!-- 2 · PAUSES -->
 <section class="feat">
   <div class="wrap">
     <div class="copy">
-      <div class="kicker">Tighten it up</div>
       <h2>Remove pauses in one tap</h2>
-      <p>Videogram finds the silent gaps in your clip and cuts them for you, so every second earns its place.</p>
-      <ul class="bul"><li>Automatic silence detection</li><li>Keep the pace, lose the dead air</li></ul>
+      <p>Videogram finds the silent gaps and tightens your clip, keeping a natural, human-sounding pace.</p>
+      <ul class="bul">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7"><use href="#i-wave"/></svg>Gentle, human-sounding pacing</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7"><use href="#i-check"/></svg>Always reversible</li>
+      </ul>
     </div>
     <div class="phone"><div class="notch"></div><div class="screen">
-      <div class="st"><span>9:41</span><span>▮▮▮</span></div>
+      <div class="st"><span>9:41</span><svg viewBox="0 0 34 12" fill="#fff"><rect x="0" y="3" width="4" height="6" rx="1"/><rect x="6" y="1" width="4" height="10" rx="1"/><rect x="20" y="1" width="12" height="7" rx="2"/></svg></div>
       <div class="body">
-        <div class="scTitle">Remove pauses in one tap</div>
+        <div class="obTitle">Remove pauses<br>in one tap</div>
+        <div class="obSub"><span>Gentle, human-sounding pacing</span><span>Always reversible</span></div>
         <div class="wave">
-          <b style="height:40%"></b><b style="height:70%"></b><b style="height:55%"></b>
-          <b class="p" style="height:30%"></b><b class="p" style="height:24%"></b>
-          <b style="height:80%"></b><b style="height:60%"></b><b style="height:90%"></b>
-          <b class="p" style="height:22%"></b>
-          <b style="height:50%"></b><b style="height:75%"></b><b style="height:45%"></b>
-          <b style="height:85%"></b><b style="height:35%"></b>
+          <b style="height:40%"></b><b style="height:70%"></b><b style="height:52%"></b>
+          <b class="p" style="height:26%"></b><b class="p" style="height:22%"></b>
+          <b style="height:82%"></b><b style="height:60%"></b><b style="height:92%"></b>
+          <b class="p" style="height:20%"></b>
+          <b style="height:48%"></b><b style="height:74%"></b><b style="height:44%"></b><b style="height:84%"></b>
         </div>
-        <div class="badge">✓ 3 pauses removed</div>
+        <div class="removed"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7"><use href="#i-check"/></svg>3 pauses removed</div>
       </div>
     </div></div>
   </div>
 </section>
 
-<!-- 2 · CAPTIONS -->
+<!-- 3 · CAPTIONS -->
 <section class="feat flip">
   <div class="wrap">
     <div class="phone"><div class="notch"></div><div class="screen">
-      <div class="st"><span>9:41</span><span>▮▮▮</span></div>
+      <div class="st"><span>9:41</span><svg viewBox="0 0 34 12" fill="#fff"><rect x="0" y="3" width="4" height="6" rx="1"/><rect x="6" y="1" width="4" height="10" rx="1"/><rect x="20" y="1" width="12" height="7" rx="2"/></svg></div>
       <div class="body">
-        <div class="scTitle">Captions that match your voice</div>
-        <div class="capstage"><div class="cap" id="cap"></div></div>
+        <div class="obTitle">Captions that<br>match your voice</div>
+        <div class="obSub"><span>Word-by-word highlight</span><span>Clean styles, not gimmicks</span></div>
+        <div class="capstage"><div class="cap" id="cap">This</div></div>
       </div>
     </div></div>
     <div class="copy">
-      <div class="kicker">Say it, see it</div>
       <h2>Captions that match your voice</h2>
-      <p>Auto-generated, word-by-word captions that highlight in time with your speech. Clean styles, not gimmicks.</p>
-      <ul class="bul"><li>Word-by-word highlight</li><li>Edit any word in a tap</li></ul>
+      <p>Auto-generated captions that highlight one word at a time, in sync with your speech.</p>
+      <ul class="bul">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7"><use href="#i-txt"/></svg>Word-by-word highlight</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7"><use href="#i-check"/></svg>Clean styles, not gimmicks</li>
+      </ul>
     </div>
   </div>
 </section>
 
-<!-- 3 · TRANSCRIPT -->
+<!-- 4 · TRANSCRIPT -->
 <section class="feat">
   <div class="wrap">
     <div class="copy">
-      <div class="kicker">Cut like a doc</div>
       <h2>Edit by transcript</h2>
       <p>Your whole clip becomes text. Tap a word to remove it and the video cuts to match — no timeline scrubbing.</p>
-      <ul class="bul"><li>Delete words, delete video</li><li>Reorder and refine effortlessly</li></ul>
+      <ul class="bul">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7"><use href="#i-scissor"/></svg>Delete words, delete video</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7"><use href="#i-check"/></svg>Reorder and refine effortlessly</li>
+      </ul>
     </div>
     <div class="phone"><div class="notch"></div><div class="screen">
-      <div class="st"><span>9:41</span><span>▮▮▮</span></div>
+      <div class="st"><span>9:41</span><svg viewBox="0 0 34 12" fill="#fff"><rect x="0" y="3" width="4" height="6" rx="1"/><rect x="6" y="1" width="4" height="10" rx="1"/><rect x="20" y="1" width="12" height="7" rx="2"/></svg></div>
       <div class="body">
-        <div class="scTitle">Edit by transcript</div>
+        <div class="obTitle">Edit by transcript</div>
         <div class="chips">
           <span class="chip">So</span><span class="chip">here</span><span class="chip">is</span>
           <span class="chip">the</span><span class="chip cut">um</span><span class="chip">whole</span>
           <span class="chip">idea</span><span class="chip cut">you know</span><span class="chip">in</span>
-          <span class="chip">one</span><span class="chip">place</span><span class="chip">.</span>
+          <span class="chip">one</span><span class="chip">place</span>
         </div>
       </div>
     </div></div>
   </div>
 </section>
 
-<!-- 4 · EXPORT -->
+<!-- 5 · EXPORT -->
 <section class="feat flip">
   <div class="wrap">
     <div class="phone"><div class="notch"></div><div class="screen">
-      <div class="st"><span>9:41</span><span>▮▮▮</span></div>
+      <div class="st"><span>9:41</span><svg viewBox="0 0 34 12" fill="#fff"><rect x="0" y="3" width="4" height="6" rx="1"/><rect x="6" y="1" width="4" height="10" rx="1"/><rect x="20" y="1" width="12" height="7" rx="2"/></svg></div>
       <div class="body">
-        <div class="scTitle">Export exactly what you need</div>
+        <div class="obTitle">Export exactly<br>what you need</div>
+        <div class="obSub"><span>Multiple export presets</span><span>Extract frames in seconds</span></div>
         <div class="exp">
-          <div class="row"><span class="ic">🎬</span>Original Video</div>
-          <div class="row"><span class="ic">⏩</span>Speed&nbsp;Up</div>
-          <div class="row"><span class="ic">🖼️</span>Animated GIF</div>
-          <div class="row"><span class="ic">🎵</span>Audio Only</div>
-          <div class="row"><span class="ic">▦</span>Frame Grid</div>
+          <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><use href="#i-film"/></svg>Original Video</div>
+          <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7"><use href="#i-fwd"/></svg>Timelapse</div>
+          <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><use href="#i-gif"/></svg>Animated GIF</div>
+          <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7"><use href="#i-wave"/></svg>Audio Only</div>
+          <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><use href="#i-cell"/></svg>Frame Extraction</div>
         </div>
       </div>
     </div></div>
     <div class="copy">
-      <div class="kicker">Ship it</div>
       <h2>Export exactly what you need</h2>
-      <p>One clip, every format. Full video, sped-up, muted, animated GIF, PNG sequence, audio, or a text transcript.</p>
-      <ul class="bul"><li>Multiple export presets</li><li>Extract frames in seconds</li></ul>
+      <p>One clip, every format — full video, timelapse, animated GIF, audio, or an extracted frame grid.</p>
+      <ul class="bul">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7"><use href="#i-check"/></svg>Multiple export presets</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><use href="#i-cell"/></svg>Extract frames in seconds</li>
+      </ul>
     </div>
   </div>
 </section>
 
-<!-- 5 · FRAME GRID -->
+<!-- 6 · IMPORT -->
 <section class="feat">
   <div class="wrap">
     <div class="copy">
-      <div class="kicker">The signature move</div>
-      <h2>Turn a video into a frame grid</h2>
-      <p>Evenly-spaced frames laid out as a shareable grid, with smart face-aware cropping so faces stay centered.</p>
-      <ul class="bul"><li>3×3 up to large layouts</li><li>Face-aware cropping</li></ul>
+      <h2>Import from your library</h2>
+      <p>Bring in videos, Live Photos, or images. Videogram asks for photo access only when you pick media.</p>
+      <ul class="bul">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><use href="#i-photo"/></svg>Videos, Live Photos &amp; images</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7"><use href="#i-check"/></svg>Only the items you choose</li>
+      </ul>
     </div>
     <div class="phone"><div class="notch"></div><div class="screen">
-      <div class="st"><span>9:41</span><span>▮▮▮</span></div>
+      <div class="st"><span>9:41</span><svg viewBox="0 0 34 12" fill="#fff"><rect x="0" y="3" width="4" height="6" rx="1"/><rect x="6" y="1" width="4" height="10" rx="1"/><rect x="20" y="1" width="12" height="7" rx="2"/></svg></div>
       <div class="body">
-        <div class="scTitle">Frame grid</div>
-        <div class="grid3"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <div class="obTitle">Import from<br>your library</div>
+        <div class="obSub"><span>We'll ask for photo access only</span><span>when you pick media.</span></div>
+        <div class="imp">
+          <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><use href="#i-film"/></svg>Video clip</div>
+          <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><use href="#i-photo"/></svg>Live Photo</div>
+          <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><use href="#i-cell"/></svg>Image</div>
+        </div>
       </div>
     </div></div>
   </div>
 </section>
 
-<!-- REAL SHOT + PRICING -->
-<section class="shotband">
+<!-- REAL SCREENSHOTS -->
+<section class="gallery">
   <div class="wrap">
-    <div class="kicker" style="text-align:center">On device</div>
-    <h2 style="font-size:clamp(26px,3.6vw,36px);font-weight:700;margin:6px 0 4px">Private by design</h2>
-    <p style="color:var(--muted);max-width:520px;margin:0 auto">Everything runs on your iPhone. No accounts, no servers, no tracking — your videos never leave your device.</p>
-    <div class="shotframe"><img src="shot-logo.png" alt="Videogram app" loading="lazy"></div>
+    <h2>Straight from the app</h2>
+    <p>Real screens — a frame grid, the export presets, and Premium.</p>
+    <div class="shots">
+      <div class="shotframe"><img src="shot-grid.png" alt="Frame grid" loading="lazy"></div>
+      <div class="shotframe"><img src="shot-export.png" alt="Export presets" loading="lazy"></div>
+      <div class="shotframe"><img src="shot-paywall.png" alt="Premium" loading="lazy"></div>
+    </div>
+  </div>
+</section>
 
+<!-- PRICING -->
+<section class="gallery" style="padding-top:24px">
+  <div class="wrap">
+    <h2>Private by design</h2>
+    <p>Everything runs on your iPhone. No accounts, no servers, no tracking.</p>
     <div class="price">
       <div class="card"><div class="amt">$2.99</div><div class="per">Premium · monthly</div></div>
-      <div class="card best"><div class="amt">$19.99</div><div class="per">Premium · yearly · best value</div></div>
+      <div class="card best"><div class="amt">$19.99</div><div class="per">Premium · yearly</div></div>
       <div class="card"><div class="amt">$24.99</div><div class="per">Lifetime · pay once</div></div>
     </div>
-    <p style="color:var(--muted);font-size:13px;margin-top:14px">Premium removes the watermark and unlocks every export format. A free tier is always available.</p>
+    <p style="font-size:13px;margin-top:16px">Premium removes the watermark and unlocks every export format. A free tier is always available.</p>
   </div>
 </section>
 
 <footer>
   © 2026 Francesco Bertocci · Videogram
-  <div style="margin-top:10px">
-    <a href="privacy.html">Privacy</a>·<a href="terms.html">Terms</a>·<a href="support.html">Support</a>
-  </div>
+  <div style="margin-top:10px"><a href="privacy.html">Privacy</a>·<a href="terms.html">Terms</a>·<a href="support.html">Support</a></div>
 </footer>
 
 <script>
-  // caption word-by-word highlight (mimics onboarding page 3)
-  var words = ["This","is","how","your","captions","will","look","right","here"];
-  var el = document.getElementById('cap'), i = 0;
-  function tick(){ el.textContent = words[i]; i = (i+1) % words.length; }
-  tick(); setInterval(tick, 380);
+  var words=["This","is","how","your","captions","will","look","right","here"],el=document.getElementById('cap'),i=0;
+  setInterval(function(){el.textContent=words[i];i=(i+1)%words.length;},380);
 </script>
 </body>
 </html>

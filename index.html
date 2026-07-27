@@ -333,9 +333,14 @@
   (function(){
     var box=document.getElementById('logoAnim');
     if(!box||!window.lottie) return;
-    var anim=lottie.loadAnimation({container:box,renderer:'svg',loop:true,autoplay:true,path:'logo.json'});
+    // loop:false + reverse on 'complete' = clean bounce (autoReverse) with no
+    // reset-jump/flicker between passes.
+    var anim=lottie.loadAnimation({container:box,renderer:'svg',loop:false,autoplay:true,path:'logo.json'});
     anim.addEventListener('DOMLoaded',function(){ anim.setSpeed(0.8); });
-    anim.addEventListener('loopComplete',function(){ anim.setDirection(anim.playDirection===1?-1:1); });
+    anim.addEventListener('complete',function(){
+      anim.setDirection(anim.playDirection===1?-1:1);
+      anim.play();
+    });
   })();
 
   var words=["This","is","how","your","captions","will","look","right","here"],el=document.getElementById('cap'),i=0;

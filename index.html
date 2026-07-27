@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Videogram — Edit by transcript, trim frame-by-frame</title>
 <meta name="description" content="Turn any video into frame grids, clips, GIFs and captions — edited by transcript, trimmed frame-by-frame, all on your device.">
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="apple-touch-icon" href="logo.png">
 <style>
   :root{
     --ink:#ffffff; --muted:rgba(255,255,255,.5); --muted2:rgba(255,255,255,.7);
@@ -23,7 +25,7 @@
   /* hero */
   header.hero{text-align:center;padding:96px 24px 72px;
     background:radial-gradient(52% 40% at 50% 8%,rgba(255,255,255,.05),transparent 70%)}
-  .logo{width:100px;height:100px;margin:0 auto 28px;animation:floaty 5s ease-in-out infinite}
+  .logo{width:116px;height:116px;border-radius:26px;margin:0 auto 28px;display:block;animation:floaty 5s ease-in-out infinite}
   @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
   h1{font-size:clamp(38px,7vw,64px);font-weight:300;letter-spacing:-.02em;margin:0 0 14px}
   .tag{font-size:clamp(16px,2.3vw,20px);color:var(--muted2);font-weight:300;max-width:540px;margin:0 auto 30px;white-space:pre-line}
@@ -145,11 +147,7 @@
 
 <!-- HERO -->
 <header class="hero">
-  <svg class="logo" viewBox="0 0 120 120" aria-label="Videogram">
-    <polygon points="60,20 100,40 60,60 20,40" fill="rgba(255,255,255,.32)"/>
-    <polygon points="60,44 100,64 60,84 20,64" fill="#ffffff"/>
-    <polygon points="60,68 100,88 60,108 20,88" fill="rgba(255,255,255,.32)"/>
-  </svg>
+  <img class="logo" src="logo.png" alt="Videogram" width="116" height="116">
   <h1>Videogram</h1>
   <p class="tag">Edit by transcript, trim frame-by-frame
 & add captions — fast.</p>

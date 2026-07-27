@@ -25,7 +25,8 @@
   /* hero */
   header.hero{text-align:center;padding:96px 24px 72px;
     background:radial-gradient(52% 40% at 50% 8%,rgba(255,255,255,.05),transparent 70%)}
-  .logo{width:116px;height:116px;border-radius:26px;margin:0 auto 28px;display:block;animation:floaty 5s ease-in-out infinite}
+  .logo{width:132px;height:132px;margin:0 auto 26px;display:block;animation:floaty 5s ease-in-out infinite}
+  .logo svg{display:block}
   @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
   h1{font-size:clamp(38px,7vw,64px);font-weight:300;letter-spacing:-.02em;margin:0 0 14px}
   .tag{font-size:clamp(16px,2.3vw,20px);color:var(--muted2);font-weight:300;max-width:540px;margin:0 auto 30px;white-space:pre-line}
@@ -147,7 +148,9 @@
 
 <!-- HERO -->
 <header class="hero">
-  <img class="logo" src="logo.png" alt="Videogram" width="116" height="116">
+  <div class="logo" id="logoAnim" role="img" aria-label="Videogram">
+    <noscript><img src="logo.png" width="120" height="120" alt="Videogram"></noscript>
+  </div>
   <h1>Videogram</h1>
   <p class="tag">Edit by transcript, trim frame-by-frame
 & add captions — fast.</p>
@@ -323,7 +326,18 @@
   <div style="margin-top:10px"><a href="privacy.html">Privacy</a>·<a href="terms.html">Terms</a>·<a href="support.html">Support</a></div>
 </footer>
 
+<script src="lottie_light.min.js"></script>
 <script>
+  // Hero logo — same Lottie animation as the app onboarding (v-148),
+  // auto-reverse loop at 0.8x speed.
+  (function(){
+    var box=document.getElementById('logoAnim');
+    if(!box||!window.lottie) return;
+    var anim=lottie.loadAnimation({container:box,renderer:'svg',loop:true,autoplay:true,path:'logo.json'});
+    anim.addEventListener('DOMLoaded',function(){ anim.setSpeed(0.8); });
+    anim.addEventListener('loopComplete',function(){ anim.setDirection(anim.playDirection===1?-1:1); });
+  })();
+
   var words=["This","is","how","your","captions","will","look","right","here"],el=document.getElementById('cap'),i=0;
   setInterval(function(){el.textContent=words[i];i=(i+1)%words.length;},380);
 </script>

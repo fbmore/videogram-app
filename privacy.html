@@ -35,16 +35,16 @@
   <img src="logo.png" alt="Videogram" width="52" height="52" style="border-radius:13px;display:block;margin:20px 0 4px">
   <div class="kicker">Videogram</div>
   <h1>Privacy Policy</h1>
-  <p class="muted">Last updated: 26 July 2026</p>
+  <p class="muted">Last updated: 5 September 2026</p>
 
-  <p class="lead">Videogram turns your videos into frame grids, clips, GIFs and more — and it does all of it on your device. It has no accounts, no servers, and no analytics. Your videos never leave your phone through us.</p>
+  <p class="lead">Videogram turns your videos into frame grids, clips, GIFs and more — and it does all of it on your device, including transcription. It has no accounts, no servers, and no analytics. Your videos never leave your phone through us.</p>
 
   <p><span class="pill">In short</span>&nbsp; No accounts. No tracking. No analytics. No advertising. We don’t collect your videos, photos, or any personal information — because we have nowhere to send them.</p>
 
   <hr>
 
   <h2>What Videogram works with</h2>
-  <p>Videogram works with videos, Live Photos, and images that <strong>you choose</strong> from your photo library or files. All processing — extracting frames, detecting faces (via Apple’s on-device Vision framework), building grids, trimming, and exporting videos, GIFs, PNG sequences and audio — happens <strong>entirely on your device</strong> using Apple’s AVFoundation and Vision frameworks. None of it is uploaded anywhere.</p>
+  <p>Videogram works with videos, Live Photos, and images that <strong>you choose</strong> from your photo library or files. All processing — extracting frames, detecting faces (via Apple’s on-device Vision framework), building grids, trimming, and exporting videos, GIFs and audio — happens <strong>entirely on your device</strong> using Apple’s AVFoundation and Vision frameworks. None of it is uploaded anywhere.</p>
 
   <h2>What is stored</h2>
   <p>Videogram keeps only what’s needed to work: temporary files it creates while processing, and the finished exports you explicitly save to your Photos library or Files. These live on your device (and in your own iCloud only if you choose to save them there). The developer has no access to any of it.</p>
@@ -54,8 +54,11 @@
     <li>No account, sign-in, name, email, or phone number is required or collected.</li>
     <li>No analytics, usage tracking, crash reporting, or advertising SDKs of any kind.</li>
     <li>No location data.</li>
-    <li>Your videos, photos, frames, and exports are never sent to the developer or any third‑party server.</li>
+    <li>Your videos, photos, frames, transcripts, and exports are never sent to the developer or any third‑party server. The only data that leaves your device is anonymous purchase data handled by Apple and RevenueCat (see below).</li>
   </ul>
+
+  <h2>Speech recognition (Transcript &amp; Captions)</h2>
+  <p>Transcripts and captions are generated <strong>entirely on your device</strong> using Apple’s on-device speech recognition. The audio of your video is never uploaded, and the resulting transcript is stored only on your device. On iOS 26 and macOS 26 the app downloads a small language model from Apple the first time you transcribe in a given language; that download contains no data about you. Videogram never records you: the microphone permission it lists is used only by Apple’s speech framework, and the app only reads audio from the video file you picked. Transcription is available in English, Italian, Spanish and French.</p>
 
   <h2>Photo library access</h2>
   <p>When you pick media, iOS may ask for permission to access your photo library. Videogram only reads the specific items you select, and only writes back files you ask it to save. It never scans or uploads your library.</p>

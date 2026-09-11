@@ -122,9 +122,15 @@
   .gallery{padding:70px 0;border-top:1px solid var(--line);text-align:center}
   .gallery h2{font-size:clamp(26px,3.6vw,34px);font-weight:600;margin:0 0 6px}
   .gallery p{color:var(--muted2);font-weight:300;max-width:560px;margin:0 auto 8px;text-wrap:pretty}
+  .gallery p.intro{max-width:680px}
   .shots{display:flex;gap:22px;justify-content:center;flex-wrap:wrap;margin-top:36px}
   .shotframe{width:min(220px,calc(50% - 11px));border-radius:34px;border:1px solid var(--line);background:#000;padding:8px;box-shadow:0 24px 60px rgba(0,0,0,.6)}
   .shotframe img{width:100%;height:auto;display:block;border-radius:26px}
+  /* iPad row: same bezel language as the phones, with radii scaled to the larger
+     glass and kept concentric (outer 30 = inner 20 + 10 padding). */
+  .shots.ipad{margin-top:22px}
+  .tabframe{width:min(440px,100%);border-radius:30px;border:1px solid var(--line);background:#000;padding:10px;box-shadow:0 24px 60px rgba(0,0,0,.6)}
+  .tabframe img{width:100%;height:auto;display:block;border-radius:20px}
 
   /* pricing */
   .price{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:34px}
@@ -316,12 +322,16 @@
 <section class="gallery">
   <div class="wrap">
     <h2>Straight from the app</h2>
-    <p>Real screens — a frame grid, the transcript editor, the export presets, and&nbsp;Premium.</p>
+    <p class="intro">Real screens on iPhone and iPad — a frame grid, the transcript editor, the export&nbsp;presets, and&nbsp;Premium.</p>
     <div class="shots">
       <div class="shotframe"><img src="shot-grid.webp" width="612" height="1330" alt="A clip turned into a three-by-three grid of frames" loading="lazy"></div>
       <div class="shotframe"><img src="shot-transcript.webp" width="612" height="1330" alt="The transcript editor, with filler words struck out and pauses marked between segments" loading="lazy"></div>
       <div class="shotframe"><img src="shot-export.webp" width="612" height="1330" alt="Export presets: frame grid, original, speed up, animated GIF, audio only and video only" loading="lazy"></div>
       <div class="shotframe"><img src="shot-paywall.webp" width="612" height="1330" alt="Videogram Premium: annual with a 7-day free trial, monthly, or lifetime" loading="lazy"></div>
+    </div>
+    <div class="shots ipad">
+      <div class="tabframe"><img src="shot-ipad-transcript.webp" width="880" height="1174" alt="The transcript editor on iPad, with filler words struck out and pauses marked between segments" loading="lazy"></div>
+      <div class="tabframe"><img src="shot-ipad-export.webp" width="880" height="1174" alt="Export presets on iPad, shown as a sheet over the frame grid" loading="lazy"></div>
     </div>
   </div>
 </section>

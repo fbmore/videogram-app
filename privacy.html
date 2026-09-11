@@ -59,6 +59,7 @@
 
   <h2>Speech recognition (Transcript &amp; Captions)</h2>
   <p>Transcripts and captions are generated <strong>entirely on your device</strong> using Apple’s on-device speech recognition. The audio of your video is never uploaded, and the resulting transcript is stored only on your device. On iOS 26 and macOS 26 the app downloads a small language model from Apple the first time you transcribe in a given language; that download contains no data about you. Videogram never records you: the microphone permission it lists is used only by Apple’s speech framework, and the app only reads audio from the video file you picked. Transcription is available in English, Italian, Spanish and French.</p>
+  <p>One thing worth explaining: on some versions of iOS the system permission prompt for speech recognition says that speech data “will be sent to Apple”. That wording is Apple’s, it is fixed by iOS, and it describes the general capability rather than how a particular app uses it. Videogram asks for <strong>on-device recognition</strong> every time; if a language cannot be recognised on the device, transcription stops with an error instead of falling back to a server.</p>
 
   <h2>Photo library access</h2>
   <p>When you pick media, iOS may ask for permission to access your photo library. Videogram only reads the specific items you select, and only writes back files you ask it to save. It never scans or uploads your library.</p>

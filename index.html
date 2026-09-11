@@ -36,7 +36,12 @@
   .cta.ghost{background:var(--surface);color:var(--ink);border:1px solid var(--line)}
   .appstore{display:inline-block;margin:0 auto}
   .appstore img{height:56px;width:auto;display:block}
-  .heroBadge{margin:0 auto 18px}
+  .heroBadge{margin:30px auto 18px}
+  /* Hero video: the 42-second tour. The canvas and the video are both black, so the
+     hairline is what gives it an edge; the shadow lifts it off the page. Radius is
+     kept small enough that the video's own caption margins never get clipped. */
+  .herovid{width:min(880px,92vw);aspect-ratio:16/9;margin:16px auto 0;display:block;border-radius:20px;
+    border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.7);background:#000;object-fit:cover}
   .dots{display:flex;gap:7px;justify-content:center;margin-top:38px}
   .dots i{width:7px;height:7px;border-radius:99px;background:rgba(255,255,255,.22)}
   .dots i.on{width:22px;background:#fff}
@@ -157,6 +162,10 @@
   <h1>Videogram</h1>
   <p class="tag">Edit by transcript, trim frame-by-frame
 & add captions — fast.</p>
+  <video class="herovid" autoplay muted loop playsinline preload="metadata" poster="media/pitch-poster.jpg"
+         aria-label="A 42-second silent tour of Videogram: any clip becomes a grid of frames, tap a word in the transcript to cut the video, captions that follow your voice in four languages, and export to video, GIF, audio or the grid itself — all on your device.">
+    <source src="media/pitch-hero.mp4" type="video/mp4">
+  </video>
   <a class="appstore heroBadge" href="https://apps.apple.com/app/id6758121924" target="_blank" rel="noopener" aria-label="Download Videogram on the App Store">
     <img src="appstore-badge.svg" alt="Download on the App Store">
   </a>
@@ -355,6 +364,13 @@
 
   var words=["This","is","how","your","captions","will","look","right","here"],el=document.getElementById('cap'),i=0;
   setInterval(function(){el.textContent=words[i];i=(i+1)%words.length;},380);
+</script>
+<script>
+  (function(){
+    var v=document.querySelector('.herovid');
+    if(!v||!window.matchMedia||!matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+    v.removeAttribute('autoplay'); v.pause(); v.controls=true;
+  })();
 </script>
 </body>
 </html>

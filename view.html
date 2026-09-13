@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Shared with you · Videogram</title>
+<meta name="robots" content="noindex">
+<!-- Static fallback for link previews. Per-share OG tags (real title, cover
+     image) are served by the Worker's /v/<id> route; this only covers a
+     direct view.html#hash link, whose hash never reaches any server. -->
+<meta property="og:title" content="Shared with you">
+<meta property="og:description" content="Content shared with you — the link expires on its own.">
+<meta property="og:image" content="https://REPLACE_WITH_YOUR_DOMAIN.com/logo.png">
+<link rel="icon" type="image/png" href="logo.png">
+<style>
+  :root{--ink:#fff;--muted:rgba(255,255,255,.55);--canvas:#000;--surface:rgba(255,255,255,.06);--line:rgba(255,255,255,.1);--accent:#2b6acc}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--canvas);color:var(--ink);
+    font-family:-apple-system,system-ui,"Segoe UI",Roboto,sans-serif;
+    line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:860px;margin:0 auto;padding:40px 20px 80px}
+  header{display:flex;align-items:center;margin-bottom:22px}
+  header .brand{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none}
+  header img{width:28px;height:28px;border-radius:7px}
+  header .name{font-weight:600;font-size:16px}
+  h1{font-size:26px;font-weight:600;margin:0 0 4px;text-wrap:balance}
+  .meta{color:var(--muted);font-size:14px;margin-bottom:26px}
+  .from{display:flex;align-items:flex-start;gap:12px;margin:-8px 0 24px;max-width:640px}
+  .from .avatar{flex:none;width:44px;height:44px;border-radius:50%;background:var(--accent);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:600;font-size:18px;overflow:hidden}
+  .from .fromname{font-weight:600;font-size:15px;margin-top:2px}
+  .from .note{margin:2px 0 0;color:rgba(255,255,255,.85);font-size:15px;white-space:pre-line;overflow-wrap:anywhere}
+  .player{margin:18px 0 14px;border-radius:14px;overflow:hidden;background:#000;
+    border:1px solid var(--line);box-shadow:0 18px 50px rgba(0,0,0,.35)}
+  .player video{display:block;width:100%;max-height:78vh;background:#000}
+  .caption{margin:0 0 10px;font-size:15px;line-height:1.5;white-space:pre-wrap}
+  .dl{display:inline-block;margin-top:6px;font-size:14px;text-decoration:none;
+    padding:9px 16px;border-radius:999px;border:1px solid var(--line)}
+  .dl:hover{background:rgba(127,127,127,.12)}
+  .state{padding:60px 0;text-align:center;color:var(--muted);font-size:17px}
+  .state b{color:var(--ink)}
+  .dl{display:inline-block;margin:0;background:#fff;color:#000;font-weight:600;font-size:14px;
+    padding:10px 18px;border-radius:12px;text-decoration:none;cursor:pointer;font-family:inherit;min-height:44px}
+  footer{margin-top:48px;font-size:13px;color:var(--muted)}
+  footer a{color:var(--muted)}
+
+  /* ---- Lightbox ---- */
+  html.lb-open{overflow:hidden}
+  .lb{position:fixed;inset:0;height:100vh;height:100dvh;background:#000;z-index:1000;
+    display:flex;align-items:center;justify-content:center;outline:0}
+  .lb[hidden]{display:none}
+  .lb img,.lb video{max-width:92vw;max-height:80vh;object-fit:contain}
+  .lbbtn{position:absolute;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.14);color:#fff;
+    width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;
+    cursor:pointer;font-size:20px}
+  .lbbtn.close{top:16px;right:16px}
+  .lbbtn.prev{left:16px;top:50%;transform:translateY(-50%)}
+  .lbbtn.next{right:16px;top:50%;transform:translateY(-50%)}
+  .lbcaption{position:absolute;bottom:16px;left:0;right:0;text-align:center;font-size:13px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="brand" href="https://REPLACE_WITH_YOUR_DOMAIN.com">
+      <img src="logo.png" alt="">
+      <span class="name">Videogram</span>
+    </a>
+  </header>
+  <div id="content"><div class="state">Loading…</div></div>
+  <footer>
+    <a id="reportLink" href="#">Report this share</a>
+  </footer>
+</div>
+
+
+<script>
+(function(){
+  // ── CONFIGURE — must match CloudShareManager's config block exactly.
+  var CONTAINER = 'iCloud.com.fbmore.Videogram';
+  var VIEW_COUNTER_BASE = 'https://videogram-views.YOUR-CF-ACCOUNT.workers.dev';
+  var REPORT_EMAIL = 'fbmore@gmail.com';
+  // API tokens from CloudKit Dashboard → API Access → Tokens (the SAME
+  // read-only tokens the Worker's OG-tag lookup uses) — these are meant to
+  // be public (origin-locked, read-only), that's why they're fine to embed
+  // in static HTML served from this origin.
+  var ENVS = [
+    { env: 'production',  token: 'REPLACE_WITH_PRODUCTION_TOKEN' },
+    { env: 'development',  token: 'REPLACE_WITH_DEVELOPMENT_TOKEN' }
+  ].filter(function(e){ return e.token.indexOf('REPLACE') !== 0; });
+  // ──
+
+  var content = document.getElementById('content');
+  function state(html){ content.innerHTML = '<div class="state">' + html + '</div>'; }
+
+  // #<recordName>[/<itemNumber>] — the Worker's /v/<id>?p=N route rewrites
+  // to this hash form; the optional 1-based item number deep-links to one item.
+  var hashParts = (location.hash || '').replace(/^#/, '').split('/');
+  var recordName = hashParts[0];
+  var DEMO = /[?&]demo(=|&|$)/.test(location.search);
+  if (DEMO && !recordName) recordName = 'demo';
+
+  if (reportLinkSetup()) {} // see function below
+  function reportLinkSetup(){
+    var el = document.getElementById('reportLink');
+    if (!el) return false;
+    el.href = 'mailto:' + REPORT_EMAIL
+      + '?subject=' + encodeURIComponent('Report a shared link')
+      + '&body=' + encodeURIComponent('I would like to report this shared link:\n\n' + location.href +
+          '\n\nRecord: ' + (recordName || 'unknown') + '\n\nReason: ');
+    return true;
+  }
+
+  if (!recordName) { state('This link is missing its share id.'); return; }
+  if (!ENVS.length && !DEMO) { state('Viewer not configured yet — fill in view.html\'s CONFIGURE block.'); return; }
+
+  function lookup(i){
+    if (i >= ENVS.length) { state('<b>This link has expired</b><br>or the share was taken down.'); return; }
+    var e = ENVS[i];
+    fetch('https://api.apple-cloudkit.com/database/1/' + CONTAINER + '/' + e.env + '/public/records/lookup?ckAPIToken=' + e.token, {
+      method: 'POST',
+      body: JSON.stringify({ records: [{ recordName: recordName }] })
+    }).then(function(r){ return r.json(); }).then(function(resp){
+      var rec = resp.records && resp.records[0];
+      if (!rec || rec.serverErrorCode || !rec.fields) { lookup(i + 1); return; }
+      try { render(rec); }
+      catch (err) {
+        console.error('render failed', err);
+        state('<b>Something went wrong displaying this share.</b><br>Please try again.');
+      }
+    }).catch(function(){ lookup(i + 1); });
+  }
+
+  // ──────────────────────────────────────────────────────────────────────
+  // CUSTOMIZE — this is the one function every app rewrites. It gets a raw
+  // CloudKit record (`rec.fields.title.value`, `rec.fields.items.value` is
+  // an array of asset dicts each with a `.downloadURL`, `rec.fields.itemTypes.value`
+  // is a parallel array of "photo"|"video"|"pdf"|"file"|whatever-you-add,
+  // `rec.fields.itemNames.value` is parallel filenames, `rec.fields.expiresAt.value`
+  // is a Unix-ms timestamp, `rec.fields.senderName`/`.message` are optional
+  // strings) and must fill in #content. The default below renders a generic
+  // media grid + lightbox (PhotoSendr's original shape) — replace this
+  // entirely for e.g. a single video player + transcript panel, or a
+  // contact-card layout.
+  // ──────────────────────────────────────────────────────────────────────
+  function render(rec){
+    var f = rec.fields || {};
+    var title = (f.title && f.title.value) || 'Shared with you';
+    var expiresAt = f.expiresAt ? new Date(f.expiresAt.value) : null;
+    if (expiresAt && expiresAt.getTime() < Date.now()) { state('<b>This link has expired.</b>'); return; }
+    document.title = title + ' - shared';
+
+    var items = (f.items && f.items.value) || [];
+    var types = (f.itemTypes && f.itemTypes.value) || [];
+
+    // Videogram shares exactly one exported video. Anything else is a share
+    // written by an older build or another app against the same container —
+    // say so rather than rendering an empty page.
+    var videoIndex = -1;
+    for (var i = 0; i < items.length; i++) {
+      if ((types[i] || 'video') === 'video') { videoIndex = i; break; }
+    }
+    if (videoIndex < 0) { state('<b>Nothing to play here.</b><br>This link has no video attached.'); return; }
+
+    var videoURL = assetURL(items[videoIndex], 'video.mp4');
+    var posterURL = f.cover ? assetURL(f.cover, 'cover.jpg') : '';
+
+    var html = '<h1>' + escapeHTML(title) + '</h1>';
+    if (expiresAt) html += '<div class="meta">Link expires ' + expiresAt.toLocaleDateString() + '</div>';
+
+    html += '<div class="player">'
+          +   '<video controls playsinline preload="metadata"'
+          +     (posterURL ? ' poster="' + escapeAttr(posterURL) + '"' : '')
+          +     ' src="' + escapeAttr(videoURL) + '"></video>'
+          + '</div>';
+
+    // The kit puts sender/message in a separate block above the grid; with a
+    // single video the caption reads better directly beneath the player.
+    if (f.message && f.message.value) {
+      html += '<div class="caption">' + escapeHTML(f.message.value) + '</div>';
+    }
+    if (f.senderName && f.senderName.value) {
+      html += '<div class="meta">Shared by ' + escapeHTML(f.senderName.value) + '</div>';
+    }
+
+    html += '<a class="dl" href="' + escapeAttr(videoURL) + '" download>Download video</a>';
+
+    content.innerHTML = html;
+
+    if (!DEMO) { try { fetch(VIEW_COUNTER_BASE + '/hit/' + encodeURIComponent(recordName)); } catch (err) {} }
+  }
+
+  function assetURL(item, filename){
+    var url = (item && (item.downloadURL || (item.value && item.value.downloadURL))) || '';
+    // CloudKit hands back a downloadURL containing a literal "${f}" segment
+    // that must be replaced with a filename before the URL resolves. The
+    // Worker does this for og:image; the kit's viewer did not, so <video src>
+    // 404'd. See worker.js's describeRecord().
+    return url.replace('${f}', filename || 'file');
+  }
+  function escapeHTML(s){
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+  /// Asset URLs are interpolated straight into src="…" — escape them too
+  /// rather than trusting that CloudKit will never emit a quote.
+  function escapeAttr(s){ return escapeHTML(s); }
+
+  // ── Minimal lightbox (photo/video only — PDFs and generic files open in
+  // a new tab instead, see render() above). Extend this if you need more
+  // (a slideshow timer, PDF paging, zip-download-all — see PhotoSendr's
+  // view.html for a fully-featured reference implementation of all three).
+  // ── ?demo — synthetic record, zero network calls. Use this to build/test
+  // your custom render() without a real share link.
+  function renderDemo(){
+    render({
+      fields: {
+        title: { value: 'Videogram export' },
+        expiresAt: { value: Date.now() + 7 * 86400000 },
+        senderName: { value: 'Alex' },
+        message: { value: 'Shared from Videogram.' },
+        cover: { downloadURL: 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1138"><rect width="100%" height="100%" fill="#141414"/><text x="50%" y="50%" fill="#888" font-family="sans-serif" font-size="28" text-anchor="middle">Videogram</text></svg>') },
+        items: { value: [
+          { downloadURL: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4' }
+        ]},
+        itemTypes: { value: ['video'] },
+        itemNames: { value: [''] }
+      }
+    });
+  }
+
+  if (DEMO) { renderDemo(); }
+  else { lookup(0); }
+})();
+</script>
+</body>
+</html>

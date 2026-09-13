@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Videogram</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="/logo.png">
+<style>
+  body{margin:0;background:#000;color:#fff;font-family:-apple-system,system-ui,sans-serif;
+    display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center}
+  a{color:#fff}
+</style>
+</head>
+<body>
+<div id="msg"><p>Page not found. <a href="/">Home</a></p></div>
+<script>
+// Fallback for while /v/* is served by your static host instead of the
+// Worker (e.g. mid-DNS-propagation, or before the Worker route is added):
+// forward share links to the hash-based viewer.
+(function(){
+  var m = location.pathname.match(/^\/v\/([A-Za-z0-9-]{10,100})$/);
+  if (m) {
+    // ?p=N deep-links to one item; the viewer reads it as #<id>/N.
+    var p = parseInt((location.search.match(/[?&]p=(\d+)/) || [])[1], 10);
+    document.getElementById('msg').textContent = 'Opening the share…';
+    location.replace('/view.html#' + m[1] + (p >= 1 ? '/' + p : ''));
+  }
+})();
+</script>
+</body>
+</html>

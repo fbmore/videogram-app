@@ -35,26 +35,36 @@
   <img src="logo.png" alt="Videogram" width="52" height="52" style="border-radius:13px;display:block;margin:20px 0 4px">
   <div class="kicker">Videogram</div>
   <h1>Privacy Policy</h1>
-  <p class="muted">Last updated: 5 September 2026</p>
+  <p class="muted">Last updated: 14 September 2026</p>
 
-  <p class="lead">Videogram turns your videos into frame grids, clips, GIFs and more — and it does all of it on your device, including transcription. It has no accounts, no servers, and no analytics. Your videos never leave your phone through us.</p>
+  <p class="lead">Videogram turns your videos into frame grids, clips, GIFs and more — and it does all of it on your device, including transcription. It has no accounts and no analytics. Your videos stay on your phone, with one exception you control: a video you choose to share by link is uploaded so that the link works.</p>
 
-  <p><span class="pill">In short</span>&nbsp; No accounts. No tracking. No analytics. No advertising. We don’t collect your videos, photos, or any personal information — because we have nowhere to send them.</p>
+  <p><span class="pill">In short</span>&nbsp; No accounts. No tracking. No analytics. No advertising. We don’t collect your videos, photos, or any personal information. The only thing that ever leaves your device is a video you deliberately publish with <strong>Share via link</strong> — and it is deleted when the link expires or when you end it.</p>
 
   <hr>
 
   <h2>What Videogram works with</h2>
-  <p>Videogram works with videos, Live Photos, and images that <strong>you choose</strong> from your photo library or files. All processing — extracting frames, detecting faces (via Apple’s on-device Vision framework), building grids, trimming, and exporting videos, GIFs and audio — happens <strong>entirely on your device</strong> using Apple’s AVFoundation and Vision frameworks. None of it is uploaded anywhere.</p>
+  <p>Videogram works with videos, Live Photos, and images that <strong>you choose</strong> from your photo library or files. All processing — extracting frames, detecting faces (via Apple’s on-device Vision framework), building grids, trimming, and exporting videos, GIFs and audio — happens <strong>entirely on your device</strong> using Apple’s AVFoundation and Vision frameworks. None of it is uploaded, unless you create a share link (see below).</p>
 
   <h2>What is stored</h2>
-  <p>Videogram keeps only what’s needed to work: temporary files it creates while processing, and the finished exports you explicitly save to your Photos library or Files. These live on your device (and in your own iCloud only if you choose to save them there). The developer has no access to any of it.</p>
+  <p>Videogram keeps only what’s needed to work: temporary files it creates while processing, and the finished exports you explicitly save to your Photos library or Files. These live on your device (and in your own iCloud only if you choose to save them there). Videogram also keeps copies of the last few clips you were editing — up to five — so you can pick up where you left off; they stay on your device, are excluded from iCloud backup, and are removed when you delete them from Recent Edits or when older ones make room for new ones. The developer has no access to any of it.</p>
 
   <h2>What we do <em>not</em> collect</h2>
   <ul>
     <li>No account, sign-in, name, email, or phone number is required or collected.</li>
     <li>No analytics, usage tracking, crash reporting, or advertising SDKs of any kind.</li>
     <li>No location data.</li>
-    <li>Your videos, photos, frames, transcripts, and exports are never sent to the developer or any third‑party server. The only data that leaves your device is anonymous purchase data handled by Apple and RevenueCat (see below).</li>
+    <li>Your videos, photos, frames, transcripts, and exports are never sent to the developer or any third‑party server — except a video you choose to share by link (see the next section). Beyond that, the only data that leaves your device is anonymous purchase data handled by Apple and RevenueCat (see below).</li>
+  </ul>
+
+  <h2>Share links</h2>
+  <p><strong>Share via link</strong> is optional, and nothing is uploaded until you tap <strong>Create Link</strong>. When you do, Videogram uploads the exported video, the cover image and name you chose, and the link’s expiry date to a public database in Apple’s iCloud (CloudKit) that belongs to the developer’s Apple developer account. The page that plays the video is served from <strong>videogramapp.com</strong> through Cloudflare.</p>
+  <ul>
+    <li><strong>Who can see it.</strong> Anyone who has the link can watch the video without signing in. The address is long and unguessable, but it is not private: treat it like any other link you send. Messaging apps may show the name and cover image as a preview.</li>
+    <li><strong>How long it lasts.</strong> Free links expire after 7 days; Premium links can be set to 7, 30 or 90 days. When a link expires, the video is deleted from the server automatically. You can end a link sooner at any time from <strong>Shared Links</strong> in the app, which deletes the video immediately.</li>
+    <li><strong>What is counted.</strong> The viewer page keeps an anonymous count of how many times each link was opened, so the app can show it to you. No names, accounts or IP addresses are stored by Videogram. Cloudflare, which serves the page, processes viewers’ connection data under <a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener">its own privacy policy</a>, and Apple processes the stored files under <a href="https://www.apple.com/legal/privacy/" target="_blank" rel="noopener">Apple’s</a>.</li>
+    <li><strong>What the developer can see.</strong> To run the service, the developer can see how much storage shared videos use and can remove a link that breaks the <a href="terms.html">Terms of Use</a>. The developer does not browse or analyse shared videos.</li>
+    <li><strong>Reporting.</strong> Every shared page has a link to report it. You can also write to <a href="mailto:videogram@fbmore.com">videogram@fbmore.com</a> with the link’s address and it will be removed.</li>
   </ul>
 
   <h2>Speech recognition (Transcript &amp; Captions)</h2>

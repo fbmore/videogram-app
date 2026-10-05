@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Videogram — Edit by transcript, trim frame-by-frame</title>
-<meta name="description" content="Turn any video into frame grids, clips, GIFs and captions on iPhone and iPad — edited by transcript, trimmed frame-by-frame, all on your device, and shared with a link that expires on its own.">
+<title>Videogram — Film with you in it, edit by transcript</title>
+<meta name="description" content="Film with both cameras at once or talk over any video, then pick where your face goes afterwards. Edit by tapping words, remove or speed up pauses, add captions and share with a link — all on your iPhone.">
 <link rel="icon" type="image/png" href="logo.png">
 <link rel="apple-touch-icon" href="logo.png">
 <style>
@@ -115,8 +115,51 @@
     background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;
     opacity:0;transform:translateY(10px);animation:up 5.6s ease-in-out infinite}
   .imp .row svg{width:22px;height:22px;opacity:.92}
-  .imp .row:nth-child(1){animation-delay:0s}.imp .row:nth-child(2){animation-delay:.16s}.imp .row:nth-child(3){animation-delay:.32s}
+  .imp .row:nth-child(1){animation-delay:0s}.imp .row:nth-child(2){animation-delay:.16s}.imp .row:nth-child(3){animation-delay:.32s}.imp .row:nth-child(4){animation-delay:.48s}
   @keyframes up{0%{opacity:0;transform:translateY(10px)}12%,90%{opacity:1;transform:none}100%{opacity:1}}
+
+  /* headings and copy wrap evenly */
+  .feat h2,.gallery h2{text-wrap:balance}
+  .feat p{text-wrap:pretty}
+
+  /* dual camera stage: the face glides between layouts, like the editor */
+  .stage{position:relative;width:100%;flex:1;margin-top:18px;border-radius:18px;overflow:hidden;
+    background:linear-gradient(180deg,#5a7fb2 0%,#b8a8a2 52%,#304c41 53%,#24382f 100%)}
+  .stage .sun{position:absolute;left:20%;top:16%;width:42px;height:42px;border-radius:50%;background:#fbefc4}
+  .stage .face{position:absolute;overflow:hidden;background:linear-gradient(180deg,#3d4150,#2a2d38);
+    left:60%;top:70%;width:34%;height:22%;border-radius:50%;
+    box-shadow:0 0 0 2px rgba(255,255,255,.85);animation:layout 9s cubic-bezier(.65,0,.35,1) infinite}
+  .stage .face::before{content:"";position:absolute;left:32%;top:24%;width:36%;height:44%;border-radius:50%;background:#e2b9a0}
+  .stage .face::after{content:"";position:absolute;left:22%;top:70%;width:56%;height:40%;border-radius:40% 40% 0 0;background:#e2b9a0}
+  @keyframes layout{
+    0%,30%{left:60%;top:70%;width:34%;height:22%;border-radius:50%;box-shadow:0 0 0 2px rgba(255,255,255,.85)}
+    40%,64%{left:0;top:50%;width:100%;height:50%;border-radius:0;box-shadow:0 0 0 0 rgba(255,255,255,0)}
+    74%,100%{left:60%;top:70%;width:34%;height:22%;border-radius:50%;box-shadow:0 0 0 2px rgba(255,255,255,.85)}}
+  .tpl{display:flex;gap:8px;justify-content:center;margin-top:14px}
+  .tpl span{font-size:11.5px;padding:5px 10px;border-radius:99px;background:var(--surface);color:var(--muted2)}
+  .tpl span:nth-child(1){animation:tplA 9s step-end infinite}
+  .tpl span:nth-child(2){animation:tplB 9s step-end infinite}
+  @keyframes tplA{0%{background:#fff;color:#000}35%{background:var(--surface);color:var(--muted2)}69%{background:#fff;color:#000}}
+  @keyframes tplB{0%{background:var(--surface);color:var(--muted2)}35%{background:#fff;color:#000}69%{background:var(--surface);color:var(--muted2)}}
+
+  /* talk over a video: the video plays, you sit under the lens */
+  .tv{position:relative;width:100%;flex:1;margin-top:6px;border-radius:18px;overflow:hidden;background:#15161b}
+  .tv .ui{position:absolute;left:12%;right:12%;border-radius:10px;background:rgba(255,255,255,.08)}
+  .tv .ui.a{top:34%;height:14%}.tv .ui.b{top:52%;height:9%;right:30%}.tv .ui.c{top:65%;height:9%;right:40%}
+  .tv .me{position:absolute;left:50%;top:7%;width:30%;aspect-ratio:1;transform:translateX(-50%);border-radius:50%;
+    overflow:hidden;background:linear-gradient(180deg,#3d4150,#2a2d38);box-shadow:0 0 0 2px rgba(255,255,255,.85)}
+  .tv .me::before{content:"";position:absolute;left:32%;top:24%;width:36%;height:44%;border-radius:50%;background:#e2b9a0}
+  .tv .me::after{content:"";position:absolute;left:22%;top:70%;width:56%;height:40%;border-radius:40% 40% 0 0;background:#e2b9a0}
+  .tv .mute{position:absolute;right:10px;top:10px;width:30px;height:30px;border-radius:50%;background:rgba(0,0,0,.5);
+    display:flex;align-items:center;justify-content:center}
+  .tv .mute svg{width:16px;height:16px}
+  .tv .rec{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);width:46px;height:46px;border-radius:50%;
+    box-shadow:inset 0 0 0 3px #fff;display:flex;align-items:center;justify-content:center}
+  .tv .rec::after{content:"";width:18px;height:18px;border-radius:5px;background:#ff453a}
+  .tv .timer{position:absolute;left:50%;top:calc(7% - 4px);transform:translate(-50%,-100%);font-size:11px;font-weight:600;
+    display:flex;gap:5px;align-items:center}
+  .tv .timer i{width:6px;height:6px;border-radius:50%;background:#ff453a;animation:blink 1.4s ease-in-out infinite}
+  @keyframes blink{50%{opacity:.25}}
 
   /* real screenshot gallery */
   .gallery{padding:70px 0;border-top:1px solid var(--line);text-align:center}
@@ -143,6 +186,7 @@
   footer a{color:var(--muted2);margin:0 10px}
 
   @media (prefers-reduced-motion: reduce){*{animation:none!important}
+    .tpl span:nth-child(1){background:#fff;color:#000}
     .removed,.exp .row,.imp .row{opacity:1!important;transform:none!important}}
 </style>
 </head>
@@ -158,6 +202,10 @@
   <g id="i-check"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.5 2.5L16 9.5" stroke-linecap="round" stroke-linejoin="round"/></g>
   <g id="i-photo"><rect x="3" y="5" width="18" height="14" rx="2.4"/><circle cx="8.5" cy="10" r="1.6"/><path d="M5 18l4.5-4.5L13 17l3-3 3 3"/></g>
   <g id="i-txt"><path d="M4 6h16M4 12h16M4 18h10" stroke-linecap="round"/></g>
+  <g id="i-cam"><rect x="3" y="7" width="13" height="10" rx="2.5"/><path d="M16 11l5-3v8l-5-3" stroke-linejoin="round"/></g>
+  <g id="i-layout"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><rect x="12" y="12" width="6" height="5" rx="1.2"/></g>
+  <g id="i-mic"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21" stroke-linecap="round"/></g>
+  <g id="i-mute"><path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z" stroke-linejoin="round"/><path d="M16 9.5l4.5 5M20.5 9.5l-4.5 5" stroke-linecap="round"/></g>
   <g id="i-scissor"><circle cx="6" cy="7" r="2.4"/><circle cx="6" cy="17" r="2.4"/><path d="M8 8.5L20 17M8 15.5L20 7" stroke-linecap="round"/></g>
 </defs></svg>
 
@@ -167,8 +215,8 @@
     <noscript><img src="logo.png" width="120" height="120" alt="Videogram"></noscript>
   </div>
   <h1>Videogram</h1>
-  <p class="tag">Edit by transcript, trim frame-by-frame
-& add captions — fast.</p>
+  <p class="tag">Film with both cameras or talk over any video.
+Pick the layout afterwards — and edit by transcript.</p>
   <video class="herovid" autoplay muted loop playsinline preload="metadata" poster="media/pitch-poster.jpg"
          aria-label="A 42-second silent tour of Videogram, opening on an iPhone and an iPad side by side: any clip becomes a grid of frames, tap a word in the transcript to cut the video, captions that follow your voice in four languages, export to video, GIF, audio or the grid itself, and share it with a link that expires on its own — no accounts, no tracking.">
     <source src="media/pitch-hero.mp4" type="video/mp4">
@@ -186,12 +234,62 @@
 
 <div id="tour"></div>
 
-<!-- 2 · PAUSES -->
+<!-- 1 · BOTH CAMERAS -->
+<section class="feat">
+  <div class="wrap">
+    <div class="copy">
+      <h2>Film with you in it</h2>
+      <p>Record the front and back cameras at the same time — you and what you're showing. Nothing to decide while you shoot: pick where your face goes afterwards, switch layouts with a cut or a glide, or let the layout follow your speech.</p>
+      <ul class="bul">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7"><use href="#i-cam"/></svg>Both cameras, recorded as separate layers</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7"><use href="#i-layout"/></svg>Face bubble, split, picture-in-picture and more</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7"><use href="#i-scissor"/></svg>Pause any time; trim, speed up or drop each take</li>
+      </ul>
+    </div>
+    <div class="phone"><div class="notch"></div><div class="screen">
+      <div class="st"><span>9:41</span><svg viewBox="0 0 34 12" fill="#fff"><rect x="0" y="3" width="4" height="6" rx="1"/><rect x="6" y="1" width="4" height="10" rx="1"/><rect x="20" y="1" width="12" height="7" rx="2"/></svg></div>
+      <div class="body">
+        <div class="obTitle">Pick your layout<br>afterwards</div>
+        <div class="stage" role="img" aria-label="A landscape filmed with the back camera, with the person filming in a round bubble that glides into a split screen and back"><div class="sun"></div><div class="face"></div></div>
+        <div class="tpl" aria-hidden="true"><span>Face bubble</span><span>Split</span></div>
+      </div>
+    </div></div>
+  </div>
+</section>
+
+<!-- 2 · TALK OVER -->
+<section class="feat flip">
+  <div class="wrap">
+    <div class="phone"><div class="notch"></div><div class="screen">
+      <div class="st"><span>9:41</span><svg viewBox="0 0 34 12" fill="#fff"><rect x="0" y="3" width="4" height="6" rx="1"/><rect x="6" y="1" width="4" height="10" rx="1"/><rect x="20" y="1" width="12" height="7" rx="2"/></svg></div>
+      <div class="body" style="padding-top:14px">
+        <div class="tv" role="img" aria-label="A screen recording playing full screen while the front camera records you in a bubble just under the camera, with the video's sound muted">
+          <div class="ui a"></div><div class="ui b"></div><div class="ui c"></div>
+          <div class="timer"><i></i>0:12</div>
+          <div class="me"></div>
+          <div class="mute"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><use href="#i-mute"/></svg></div>
+          <div class="rec"></div>
+        </div>
+      </div>
+    </div></div>
+    <div class="copy">
+      <h2>Talk over any video</h2>
+      <p>Pick a screen recording or a clip from your trip and record your face and voice while it plays. Your bubble sits right under the camera, so you look at the lens. Turn the video's own sound off if it distracts you, or keep it dipped under your voice.</p>
+      <ul class="bul">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7"><use href="#i-mic"/></svg>Your voice and the video stay in step</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7"><use href="#i-mute"/></svg>Video sound off, or dipped while you talk</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<!-- 3 · PAUSES -->
 <section class="feat">
   <div class="wrap">
     <div class="copy">
       <h2>Remove pauses in one tap</h2>
-      <p>Videogram finds the silent gaps and tightens your clip, keeping a natural, human-sounding pace.</p>
+      <p>Videogram finds the silent gaps and tightens your clip, keeping a natural, human-sounding pace. Or speed them up instead, so hands-busy footage still reads.</p>
       <ul class="bul">
         <li><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7"><use href="#i-wave"/></svg>Gentle, human-sounding pacing</li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7"><use href="#i-check"/></svg>Always reversible</li>
@@ -215,7 +313,7 @@
   </div>
 </section>
 
-<!-- 3 · CAPTIONS -->
+<!-- 4 · CAPTIONS -->
 <section class="feat flip">
   <div class="wrap">
     <div class="phone"><div class="notch"></div><div class="screen">
@@ -237,7 +335,7 @@
   </div>
 </section>
 
-<!-- 4 · TRANSCRIPT -->
+<!-- 5 · TRANSCRIPT -->
 <section class="feat">
   <div class="wrap">
     <div class="copy">
@@ -264,7 +362,7 @@
   </div>
 </section>
 
-<!-- 5 · EXPORT -->
+<!-- 6 · EXPORT -->
 <section class="feat flip">
   <div class="wrap">
     <div class="phone"><div class="notch"></div><div class="screen">
@@ -292,13 +390,14 @@
   </div>
 </section>
 
-<!-- 6 · IMPORT -->
+<!-- 7 · IMPORT -->
 <section class="feat">
   <div class="wrap">
     <div class="copy">
       <h2>Start from anything</h2>
-      <p>Pick one clip, or pick a handful of photos, Live Photos and clips and stitch them into a single video. Drag to reorder, set how long each still holds, then stitch. Videogram asks for photo access only when you pick media.</p>
+      <p>Shoot something new, pick one clip, or pick a handful of photos, Live Photos and clips from Photos or Files and stitch them into a single video. Videogram asks for camera or photo access only when you need it.</p>
       <ul class="bul">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7"><use href="#i-cam"/></svg>Shoot right in the app</li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><use href="#i-photo"/></svg>Videos, Live Photos &amp; images</li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7"><use href="#i-check"/></svg>Stitch several into one, in any order</li>
       </ul>
@@ -307,8 +406,9 @@
       <div class="st"><span>9:41</span><svg viewBox="0 0 34 12" fill="#fff"><rect x="0" y="3" width="4" height="6" rx="1"/><rect x="6" y="1" width="4" height="10" rx="1"/><rect x="20" y="1" width="12" height="7" rx="2"/></svg></div>
       <div class="body">
         <div class="obTitle">Start from<br>anything</div>
-        <div class="obSub"><span>We'll ask for photo access only</span><span>when you pick media.</span></div>
+        <div class="obSub"><span>Camera or photo access,</span><span>only when you need it.</span></div>
         <div class="imp">
+          <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><use href="#i-cam"/></svg>Shoot</div>
           <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><use href="#i-film"/></svg>Video clip</div>
           <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><use href="#i-photo"/></svg>Live Photo</div>
           <div class="row"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6"><use href="#i-cell"/></svg>Image</div>
@@ -340,7 +440,7 @@
 <section class="gallery" style="padding-top:24px">
   <div class="wrap">
     <h2>Private by design</h2>
-    <p>Editing runs on your iPhone or iPad — no accounts, no tracking. A video leaves your device only when you share it by link, and the link expires on its own.<br>Available in English, Italian, Spanish and French.</p>
+    <p>Recording, editing, transcription and background blur run on your iPhone or iPad — no accounts, no tracking. A video leaves your device only when you share it by link, and the link expires on its own.<br>Available in English, Italian, Spanish and French.</p>
     <div class="price">
       <div class="card"><div class="amt">$2.99</div><div class="per">Premium · monthly</div></div>
       <div class="card best"><div class="amt">$19.99</div><div class="per">Premium · yearly · 7 days free</div></div>

@@ -35,19 +35,22 @@
   <img src="logo.png" alt="Videogram" width="52" height="52" style="border-radius:13px;display:block;margin:20px 0 4px">
   <div class="kicker">Videogram</div>
   <h1>Privacy Policy</h1>
-  <p class="muted">Last updated: 14 September 2026</p>
+  <p class="muted">Last updated: 4 October 2026</p>
 
-  <p class="lead">Videogram turns your videos into frame grids, clips, GIFs and more — and it does all of it on your device, including transcription. It has no accounts and no analytics. Your videos stay on your phone, with one exception you control: a video you choose to share by link is uploaded so that the link works.</p>
+  <p class="lead">Videogram records you with both cameras, lets you talk over a video, and turns your videos into edits, frame grids, clips and GIFs — and it does all of it on your device, including transcription. It has no accounts and no analytics. Your videos stay on your phone, with one exception you control: a video you choose to share by link is uploaded so that the link works.</p>
 
   <p><span class="pill">In short</span>&nbsp; No accounts. No tracking. No analytics. No advertising. We don’t collect your videos, photos, or any personal information. The only thing that ever leaves your device is a video you deliberately publish with <strong>Share via link</strong> — and it is deleted when the link expires or when you end it.</p>
 
   <hr>
 
   <h2>What Videogram works with</h2>
-  <p>Videogram works with videos, Live Photos, and images that <strong>you choose</strong> from your photo library or files. All processing — extracting frames, detecting faces (via Apple’s on-device Vision framework), building grids, trimming, and exporting videos, GIFs and audio — happens <strong>entirely on your device</strong> using Apple’s AVFoundation and Vision frameworks. None of it is uploaded, unless you create a share link (see below).</p>
+  <p>Videogram works with videos you record in the app and with videos, Live Photos and images that <strong>you choose</strong> from your photo library or files. All processing — recording, laying out the two cameras, extracting frames, detecting faces and blurring the background behind you (via Apple’s on-device Vision framework), building grids, trimming, and exporting videos, GIFs and audio — happens <strong>entirely on your device</strong> using Apple’s AVFoundation and Vision frameworks. None of it is uploaded, unless you create a share link (see below).</p>
+
+  <h2>Camera and microphone</h2>
+  <p>Videogram uses the camera and microphone only while you record: when you tap <strong>Shoot</strong> to film with both cameras, or <strong>Talk over it</strong> to record your face and voice over a video. Recording starts only when you tap the record button, and the cameras turn off when you leave the recording screen. Recordings are saved inside the app on your device; they leave it only if you later create a share link for an export. You can turn camera or microphone access off at any time in Settings → Privacy &amp; Security.</p>
 
   <h2>What is stored</h2>
-  <p>Videogram keeps only what’s needed to work: temporary files it creates while processing, and the finished exports you explicitly save to your Photos library or Files. These live on your device (and in your own iCloud only if you choose to save them there). Videogram also keeps copies of the last few clips you were editing — up to five — so you can pick up where you left off; they stay on your device, are excluded from iCloud backup, and are removed when you delete them from Recent Edits or when older ones make room for new ones. The developer has no access to any of it.</p>
+  <p>Videogram keeps only what’s needed to work: your recordings, temporary files it creates while processing, and the finished exports you explicitly save to your Photos library or Files. These live on your device (and in your own iCloud only if you choose to save them there). Videogram also keeps copies of the last few clips you were editing — up to five — so you can pick up where you left off; they stay on your device, are excluded from iCloud backup, and are removed when you delete them from Recent Edits or when older ones make room for new ones. The developer has no access to any of it.</p>
 
   <h2>What we do <em>not</em> collect</h2>
   <ul>
@@ -68,7 +71,7 @@
   </ul>
 
   <h2>Speech recognition (Transcript &amp; Captions)</h2>
-  <p>Transcripts and captions are generated <strong>entirely on your device</strong> using Apple’s on-device speech recognition. The audio of your video is never uploaded, and the resulting transcript is stored only on your device. On iOS 26 and macOS 26 the app downloads a small language model from Apple the first time you transcribe in a given language; that download contains no data about you. Videogram never records you: the microphone permission it lists is used only by Apple’s speech framework, and the app only reads audio from the video file you picked. Transcription is available in English, Italian, Spanish and French.</p>
+  <p>Transcripts and captions are generated <strong>entirely on your device</strong> using Apple’s on-device speech recognition. The audio of your video is never uploaded, and the resulting transcript is stored only on your device. On iOS 26 and macOS 26 the app downloads a small language model from Apple the first time you transcribe in a given language; that download contains no data about you. When you transcribe, Videogram reads the audio of the video you are editing — never live sound from the microphone. Transcription is available in English, Italian, Spanish and French.</p>
   <p>One thing worth explaining: on some versions of iOS the system permission prompt for speech recognition says that speech data “will be sent to Apple”. That wording is Apple’s, it is fixed by iOS, and it describes the general capability rather than how a particular app uses it. Videogram asks for <strong>on-device recognition</strong> every time; if a language cannot be recognised on the device, transcription stops with an error instead of falling back to a server.</p>
 
   <h2>Photo library access</h2>

@@ -35,11 +35,11 @@
   <img src="logo.png" alt="Videogram" width="52" height="52" style="border-radius:13px;display:block;margin:20px 0 4px">
   <div class="kicker">Videogram</div>
   <h1>Privacy Policy</h1>
-  <p class="muted">Last updated: 4 October 2026</p>
+  <p class="muted">Last updated: 11 November 2026</p>
 
-  <p class="lead">Videogram records you with both cameras, lets you talk over a video, and turns your videos into edits, frame grids, clips and GIFs — and it does all of it on your device, including transcription. It has no accounts and no analytics. Your videos stay on your phone, with one exception you control: a video you choose to share by link is uploaded so that the link works.</p>
+  <p class="lead">Videogram records you with both cameras, lets you talk over a video, and turns your videos into edits, frame grids, clips and GIFs — and it does all of it on your device, including transcription. The app has no accounts and no analytics. Your videos stay on your phone, with one exception you control: a video you choose to share by link is uploaded so that the link works.</p>
 
-  <p><span class="pill">In short</span>&nbsp; No accounts. No tracking. No analytics. No advertising. We don’t collect your videos, photos, or any personal information. The only thing that ever leaves your device is a video you deliberately publish with <strong>Share via link</strong> — and it is deleted when the link expires or when you end it.</p>
+  <p><span class="pill">In short</span>&nbsp; No accounts. No tracking or analytics in the app. No advertising. We don’t collect your videos, photos, or any personal information. The only thing that ever leaves your device is a video you deliberately publish with <strong>Share via link</strong> — and it is deleted when the link expires or when you end it.</p>
 
   <hr>
 
@@ -55,7 +55,7 @@
   <h2>What we do <em>not</em> collect</h2>
   <ul>
     <li>No account, sign-in, name, email, or phone number is required or collected.</li>
-    <li>No analytics, usage tracking, crash reporting, or advertising SDKs of any kind.</li>
+    <li>No analytics, usage tracking, crash reporting, or advertising SDKs of any kind in the app.</li>
     <li>No location data.</li>
     <li>Your videos, photos, frames, transcripts, and exports are never sent to the developer or any third‑party server — except a video you choose to share by link (see the next section). Beyond that, the only data that leaves your device is anonymous purchase data handled by Apple and RevenueCat (see below).</li>
   </ul>
@@ -69,6 +69,10 @@
     <li><strong>What the developer can see.</strong> To run the service, the developer can see how much storage shared videos use and can remove a link that breaks the <a href="terms.html">Terms of Use</a>. The developer does not browse or analyse shared videos.</li>
     <li><strong>Reporting.</strong> Every shared page has a link to report it. You can also write to <a href="mailto:hello@videogramapp.com">hello@videogramapp.com</a> with the link’s address and it will be removed.</li>
   </ul>
+
+  <h2 id="website">This website</h2>
+  <p>The pages of videogramapp.com you read about the app — this one, the home, support and terms pages — count visits with <strong>Foliàire Analytics</strong>, a tool made by the same developer. It records the page address and title, the page you came from, how far you scroll, how long you stay and which links you click, and keeps one random visitor ID in your browser’s local storage so a return visit isn’t counted as a new person. It sets no cookies, doesn’t follow you to other sites, isn’t used for advertising, and respects Do Not Track. To opt out on this browser, open any of these pages with <code>#foliaire-opt-out</code> at the end of the address.</p>
+  <p>Shared video pages are <strong>not</strong> counted this way: their addresses carry the private link you were sent, and they never load this tool.</p>
 
   <h2>Speech recognition (Transcript &amp; Captions)</h2>
   <p>Transcripts and captions are generated <strong>entirely on your device</strong> using Apple’s on-device speech recognition. The audio of your video is never uploaded, and the resulting transcript is stored only on your device. On iOS 26 and macOS 26 the app downloads a small language model from Apple the first time you transcribe in a given language; that download contains no data about you. When you transcribe, Videogram reads the audio of the video you are editing — never live sound from the microphone. Transcription is available in English, Italian, Spanish and French.</p>
@@ -93,5 +97,9 @@
     © 2026 FRANCESCO BERTOCCI, LLC · <a href="index.html">Videogram</a> · <a href="terms.html">Terms of Use</a> · <a href="support.html">Support</a>
   </footer>
 </div>
+<!-- Foliàire Analytics: counts visits to these site pages (see privacy.html#website).
+     Never on view.html or 404.html, whose addresses carry private share ids. -->
+<script>window.FOLIAIRE_SITE_ID = '243995a04970325e6d7b3c92';</script>
+<script async src="https://foliairestudio.com/analytics/foliaire.js"></script>
 </body>
 </html>
